@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crude</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+</head>
+<body>
+    <div class="container p-4">
+        <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Héores
+                </div>
+                <div class="card-body">
+                    {{#if heroes}}
+                    <ul class="list-group">
+                        {{#each heroes}}
+                        <li class="list-group-item d-flex justify-content-between aling-items-center">
+                            {{nombre}} /
+                            {{rol}} /
+                            {{ultimate}} /
+                            {{habilidades}}
+                            <a href="/borrar/{{@key}}" class="btn btn-danger">Borrar</a>
+                            <a href="/edit/{{@key}}" class="btn btn-info">Editar</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                    <h1>Héores</h1>
+                    {{else}}
+                    <p>No hay registro</p>
+                    {{/if}}
+                </div>
+                <div class="card-footer">
+                    <form action="/new" method="post" id="form">
+                        <div class="form-group">
+                            <input type="text" name="nombre" placeholder="Nombre de héroe" class="form-control" id="nombre" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="rol" placeholder="Rol de héroe " class="form-control" id="rol">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="perks" placeholder="Numero de habilidades" class="form-control" id="num">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="ulti" placeholder="Ultimate" class="form-control" id="ulti">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" id="enviar" >Guardar</button>
+                    </form>
+                </div>        
+                                <div id="error" >Mete valores correctos</div>
+                </div>
+            </div>
+</div>
+ </div>
+    </div>
+</body>
+</html>
+<script>
+const formulario = document.getElementById("form");
+const inputs = document.querySelectorAll('#form input');
+const estandar = /^[a-zA-Z0-9]*$/
+ const validar = (e)=>{
+    if(estandar.test(e.target.value)){
+        console.log("bien")
+    document.getElementById("error").style.display="none";
+    document.getElementById('enviar').disabled=false;
+    }else{
+        console.log("mal")
+    document.getElementById("error").style.display="block";
+    document.getElementById('enviar').disabled=true;
+    }
+ }
+inputs.forEach((input)=>{ 
+        input.addEventListener('keyup',validar);
+ })
+
+</script>
+<style>
+                #error{
+                    color: red;
+                    display: none;
+                }
+</style>
